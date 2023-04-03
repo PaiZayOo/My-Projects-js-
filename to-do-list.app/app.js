@@ -29,10 +29,17 @@ const createEle = (text) => {
 };
 
 const addList = () => {
-  lists.append(createEle(inputText.value));
-  inputText.value = null;
+  if (createBtn.innerText === "update") {
+    const oldListItem = document.querySelector(".editing");
+    oldListItem.querySelector(".oldList").innerText = inputText.value;
+    oldListItem.classList.remove("editing");
+    createBtn.innerText = "create";
+    inputText.value = null;
+  } else {
+    lists.append(createEle(inputText.value));
+    inputText.value = null;
+  }
 };
-
 const del = (event) => {
   event.target.parentElement.parentElement.remove();
 };
@@ -44,9 +51,7 @@ const edit = (event) => {
     ).innerText;
   inputText.value = oldList;
   createBtn.innerText = "update";
-  // createBtn.addEventListener('click' , _ => {
-  //   oldList = inputText.value;
-  // })
+  event.target.parentElement.parentElement.classList.add("editing");
 };
 
 const done = (event) => {
