@@ -6,7 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To Do List</title>
-    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/todo.css">
+
 </head>
 
 <body>
@@ -15,8 +17,21 @@
             <div class="col-10">
                 <h3>To do list App</h3>
                 <div class="input-group mt-3">
-                    <input type="text" name="" id="inputText" class=" form-control"  minlength="1">
-                    <button class=" btn btn-dark" id="createBtn">Create</button>
+                    <input type="text" name="" id="inputText" class=" form-control" minlength="1">
+                    <button class=" btn btn-dark" id="createBtn">
+                        <i class="bi bi-plus-circle"></i>
+                        Create</button>
+                </div>
+
+                <div class=" my-2 d-flex justify-content-between align-items-center">
+                    <div class="align-items-center">
+                        <span>Total Lists -</span>
+                        <span class=" badge bg-black" id="tLists">0</span>
+                    </div>
+                    <div class="align-items-center">
+                        <span> Done Lists -</span>
+                        <span class=" badge bg-black" id="dLists">0</span>
+                    </div>
                 </div>
                 <ul class=" list-group mt-3" id="lists">
 

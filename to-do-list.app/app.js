@@ -5,6 +5,16 @@ const createBtn = document.querySelector("#createBtn");
 const lists = document.querySelector("#lists");
 const delBtn = document.querySelector("#delBtn");
 const editBtn = document.querySelector("#editBtn");
+const total = document.querySelector("#tLists");
+const doneTotal = document.querySelector("#dLists");
+
+const datas = [
+  "go shopping",
+  "go sleeping",
+  "hello world",
+  "good night",
+  "good morning",
+];
 
 // FUNCTIONS
 
@@ -20,8 +30,11 @@ const createEle = (text) => {
     </label>
 </div>
 <div>
-    <button class=" btn btn-danger btn-sm" id="delBtn" onclick="del(event)">Del</button>
-    <button class=" btn btn-success btn-sm" id="editBtn" onclick="edit(event)">Edit</button>
+    <button class=" btn btn-danger btn-sm" id="delBtn" onclick="del(event)">
+    <i class="bi bi-trash pe-none"></i>  </button>
+    <button class=" btn btn-success btn-sm" id="editBtn" onclick="edit(event)">
+    <i class="bi bi-pencil pe-none"></i> 
+    </button>
 
 </div>
     `;
@@ -29,23 +42,34 @@ const createEle = (text) => {
 };
 
 const addList = () => {
-  if (createBtn.innerText === "update") {
-    const oldListItem = document.querySelector(".editing");
-    oldListItem.querySelector(".oldList").innerText = inputText.value;
-    oldListItem.classList.remove("editing");
-    createBtn.innerText = "create";
-    inputText.value = null;
+  if (inputText.value.trim()) {
+    if (createBtn.innerText === "update") {
+      const oldListItem = document.querySelector(".editing");
+      oldListItem.querySelector(".oldList").innerText = inputText.value;
+      oldListItem.classList.remove("editing");
+      createBtn.innerText = "create";
+      inputText.value = null;
+    } else {
+      lists.append(createEle(inputText.value));
+      inputText.value = null;
+      counter();
+    }
   } else {
-    lists.append(createEle(inputText.value));
-    inputText.value = null;
+    alert("Please fill your lists");
   }
 };
+
+datas.forEach((data) => lists.append(createEle(data)));
+
 const del = (event) => {
-  event.target.parentElement.parentElement.remove();
+  if (confirm("Are u sure wanna delete?")) {
+    event.target.closest(".list-group-item").remove();
+    counter();
+  }
 };
 
 const edit = (event) => {
-  var oldList =
+  const oldList =
     event.target.parentElement.parentElement.querySelector(
       ".oldList"
     ).innerText;
@@ -58,6 +82,16 @@ const done = (event) => {
   event.target.nextElementSibling.classList.toggle(
     "text-decoration-line-through"
   );
+  counter();
+};
+
+const counter = () => {
+  const totalCount = lists.children.length;
+  const doneTotalCount = [...lists.children].filter(
+    (el) => el.querySelector(".form-check-input").checked === true
+  ).length;
+  total.innerText = totalCount;
+  doneTotal.innerText = doneTotalCount;
 };
 
 // PROCESS
@@ -69,3 +103,5 @@ inputText.addEventListener("keypress", (event) => {
     addList();
   }
 });
+
+counter();
