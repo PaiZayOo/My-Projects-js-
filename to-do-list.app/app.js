@@ -30,7 +30,7 @@ const createEle = (text) => {
     </label>
 </div>
 <div>
-    <button class=" btn btn-danger btn-sm" id="delBtn" onclick="del(event)">
+    <button class=" btn btn-danger btn-sm del-btn" id="delBtn" >
     <i class="bi bi-trash pe-none"></i>  </button>
     <button class=" btn btn-success btn-sm" id="editBtn" onclick="edit(event)">
     <i class="bi bi-pencil pe-none"></i> 
@@ -67,6 +67,13 @@ const del = (event) => {
     counter();
   }
 };
+
+
+  lists.addEventListener('click', event => {
+    if(event.target.classList.contains('del-btn')){
+      del(event);
+    };
+  })
 
 const edit = (event) => {
   const oldList =
