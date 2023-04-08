@@ -39,6 +39,7 @@ const tax = document.querySelector("#tax");
 const total = document.querySelector("#total");
 const tbody = document.querySelector("tbody");
 const app = document.querySelector("#app");
+const table = document.querySelector('table');
 
 //function
 
@@ -80,6 +81,14 @@ const calcTotal = () => {
   total.innerText = subTotalPrice + calcTax(subTotalPrice);
 };
 
+const showTable =  () => {
+  if(lists.children.length){
+    table.classList.remove('d-none');
+  }else{
+    table.classList.add('d-none');
+  }
+}
+
 //process (tax)
 
 //service option loop
@@ -110,6 +119,7 @@ invoiceForm.addEventListener("submit", (event) => {
   // console.log(selectedService,quantity.valueAsNumber,servicePrice);
   //  console.log(selectService.value,quantity.valueAsNumber,selectedService);
   invoiceForm.reset();
+  showTable();
 });
 
 app.addEventListener("click", (event) => {
@@ -118,4 +128,5 @@ app.addEventListener("click", (event) => {
     currentTarget.closest("tr").remove();
   }
   calcTotal();
+  showTable();
 });
