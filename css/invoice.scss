@@ -10770,13 +10770,8 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
-.del-btn {
+.btn-sm, .btn-group-sm > .btn {
   display: none;
-  transition: 10ms;
 }
 
-tr:hover .del-btn {
-  display: block;
-}
-
-/*# sourceMappingURL=invoice.css.map */
+/*# sourceMappingURL=invoice.scss.map */

@@ -38,6 +38,7 @@ const subTotal = document.querySelector("#subTotal");
 const tax = document.querySelector("#tax");
 const total = document.querySelector("#total");
 const tbody = document.querySelector("tbody");
+const app = document.querySelector('#app');
 
 //function
 
@@ -49,7 +50,12 @@ const createData = (selectedService, servicePrice) => {
   const totalPrice = servicePrice * quantity.valueAsNumber;
   tr.innerHTML = `
  
-  <td >${selectedService}</td>
+  <td >
+  <div class=" d-flex justify-content-between align-items-center">
+  ${selectedService}
+  <i class=" bi bi-trash text-warning del-btn"></i>
+  </div>
+  </td>
   <td class =" text-end">${quantity.valueAsNumber}</td>
   <td class =" text-end">${servicePrice}</td>
   <td class =" text-end totalPrice" > ${totalPrice}</td>
@@ -59,7 +65,7 @@ const createData = (selectedService, servicePrice) => {
 
 //calculate Total
 const calcTax = (amount, percent = 5) => {
-  return (amout * percent) / 100;
+  return (amount * percent) / 100;
 };
 
 const calcTotal = () => {
@@ -67,7 +73,10 @@ const calcTotal = () => {
   const subTotalPrice = [...tPrice].reduce((pv, cv) => {
     return pv + parseFloat(cv.innerText);
   }, 0);
-  calcTax(subTotalPrice, percent);
+
+  tax.innerText = calcTax(subTotalPrice);
+  subTotal.innerText = subTotalPrice;
+  total.innerText = subTotalPrice + calcTax(subTotalPrice);
 };
 
 //process (tax)
@@ -93,3 +102,12 @@ invoiceForm.addEventListener("submit", (event) => {
   //  console.log(selectService.value,quantity.valueAsNumber,selectedService);
   invoiceForm.reset();
 });
+
+app.addEventListener('click',event => {
+  const currentTarget = event.target;
+  if(currentTarget.classList.contains('del-btn')){
+    currentTarget.closest('tr').remove();
+    
+  }
+  calcTotal();
+})

@@ -6,3 +6,12 @@ $font-family-sans-serif :  'Roboto Condensed', sans-serif;
 
 
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
+
+.del-btn{
+    display: none ;
+    transition: 10ms;
+}
+
+tr:hover .del-btn{
+    display: block;
+}
