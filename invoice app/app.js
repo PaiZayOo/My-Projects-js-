@@ -38,26 +38,27 @@ const subTotal = document.querySelector("#subTotal");
 const tax = document.querySelector("#tax");
 const total = document.querySelector("#total");
 const tbody = document.querySelector("tbody");
-const app = document.querySelector('#app');
+const app = document.querySelector("#app");
 
 //function
 
 //create table data
 
-const createData = (selectedService, servicePrice) => {
+const createData = (service, quantity) => {
   const tr = document.createElement("tr");
+  tr.setAttribute("service-id", service.id);
   tr.classList.add("lists");
-  const totalPrice = servicePrice * quantity.valueAsNumber;
+  const totalPrice = service.price * quantity;
   tr.innerHTML = `
  
   <td >
   <div class=" d-flex justify-content-between align-items-center">
-  ${selectedService}
+  ${service.title}
   <i class=" bi bi-trash text-warning del-btn"></i>
   </div>
   </td>
-  <td class =" text-end">${quantity.valueAsNumber}</td>
-  <td class =" text-end">${servicePrice}</td>
+  <td class =" text-end list-quantity">${quantity}</td>
+  <td class =" text-end">${service.price}</td>
   <td class =" text-end totalPrice" > ${totalPrice}</td>
   `;
   return tr;
@@ -89,25 +90,32 @@ services.forEach((service) => {
 //data collect from form
 invoiceForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  const selectedService = services.find(
-    (el) => el.id == selectService.value
-  ).title;
-  const servicePrice = services.find(
-    (el) => el.id == selectService.value
-  ).price;
+  const selectedService = services.find((el) => el.id == selectService.value);
 
-  lists.append(createData(selectedService, servicePrice));
+  const isExsitedService = [...lists.children].find(
+    (el) => el.getAttribute("service-id") == selectService.value
+  );
+
+  if (isExsitedService) {
+    const exsitedQuantity = isExsitedService.querySelector(".list-quantity");
+    const exsitedTotal = isExsitedService.querySelector(".totalPrice");
+    exsitedQuantity.innerText =
+      parseFloat(exsitedQuantity.innerText) + quantity.valueAsNumber;
+    exsitedTotal.innerText = parseFloat(exsitedQuantity.innerText) * selectedService.price;
+  } else {
+    lists.append(createData(selectedService, quantity.valueAsNumber));
+  }
+
   calcTotal();
   // console.log(selectedService,quantity.valueAsNumber,servicePrice);
   //  console.log(selectService.value,quantity.valueAsNumber,selectedService);
   invoiceForm.reset();
 });
 
-app.addEventListener('click',event => {
+app.addEventListener("click", (event) => {
   const currentTarget = event.target;
-  if(currentTarget.classList.contains('del-btn')){
-    currentTarget.closest('tr').remove();
-    
+  if (currentTarget.classList.contains("del-btn")) {
+    currentTarget.closest("tr").remove();
   }
   calcTotal();
-})
+});
