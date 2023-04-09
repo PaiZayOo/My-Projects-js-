@@ -13,11 +13,18 @@
 <body>
     <div id="app">
         <div class="container">
-            <h1 class="my-3">Invoice App</h1>
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 class="my-3">Invoice App</h1>
+                <div>
+                    <button class=" btn  btn-success btn-lg" onclick="print()">
+                        <i class=" bi bi-printer pe-none"></i>
+                    </button>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-12">
 
-                    <form action="" id="invoiceForm">
+                    <form action="" id="invoiceForm" class=" d-print-none">
                         <div class=" row border shadow-sm p-3">
                             <div class="col">
 
@@ -57,15 +64,15 @@
                             <tfoot class=" table-dark">
                                 <tr>
                                     <td class=" text-end" colspan="3">Subtotal</td>
-                                    <td id="subTotal" class=" text-end">$ 0</td>
+                                    <td id="subTotal" class=" text-end"> </td>
                                 </tr>
                                 <tr>
                                     <td class=" text-end" colspan="3">Tax(5%)</td>
-                                    <td id="tax" class=" text-end">$ 0</td>
+                                    <td id="tax" class=" text-end"> </td>
                                 </tr>
                                 <tr>
                                     <td class=" text-end" colspan="3">Total</td>
-                                    <td id="total" class=" text-end">$ 0</td>
+                                    <td id="total" class=" text-end"> </td>
                                 </tr>
                             </tfoot>
                         </table>
