@@ -40,7 +40,9 @@ const total = document.querySelector("#total");
 const tbody = document.querySelector("tbody");
 const app = document.querySelector("#app");
 const table = document.querySelector('table');
-
+const addServiceOpenBtn = document.querySelector('#addServiceOpenBtn');
+const addServiceForm = document.querySelector('#addServiceForm');
+// const addFormBtn = document.querySelector('#addFormBtn');
 //function
 
 //create table data
@@ -76,9 +78,9 @@ const calcTotal = () => {
     return pv + parseFloat(cv.innerText);
   }, 0);
 
-  tax.innerText = calcTax(subTotalPrice);
-  subTotal.innerText = subTotalPrice;
-  total.innerText = subTotalPrice + calcTax(subTotalPrice);
+  tax.innerText = '$' + ' ' + calcTax(subTotalPrice);
+  subTotal.innerText = '$' + ' ' + subTotalPrice;
+  total.innerText = '$' + ' ' +(subTotalPrice + calcTax(subTotalPrice));
 };
 
 const showTable =  () => {
@@ -101,16 +103,16 @@ invoiceForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const selectedService = services.find((el) => el.id == selectService.value);
 
-  const isExsitedService = [...lists.children].find(
+  const isExistedService = [...lists.children].find(
     (el) => el.getAttribute("service-id") == selectService.value
   );
 
-  if (isExsitedService) {
-    const exsitedQuantity = isExsitedService.querySelector(".list-quantity");
-    const exsitedTotal = isExsitedService.querySelector(".totalPrice");
-    exsitedQuantity.innerText =
-      parseFloat(exsitedQuantity.innerText) + quantity.valueAsNumber;
-    exsitedTotal.innerText = parseFloat(exsitedQuantity.innerText) * selectedService.price;
+  if (isExistedService) {
+    const existedQuantity = isExistedService.querySelector(".list-quantity");
+    const existedTotal = isExistedService.querySelector(".totalPrice");
+    existedQuantity.innerText =
+      parseFloat(existedQuantity.innerText) + quantity.valueAsNumber;
+    existedTotal.innerText = parseFloat(existedQuantity.innerText) * selectedService.price;
   } else {
     lists.append(createData(selectedService, quantity.valueAsNumber));
   }
@@ -130,3 +132,20 @@ app.addEventListener("click", (event) => {
   calcTotal();
   showTable();
 });
+
+addServiceForm.addEventListener("submit" , event => {
+  event.preventDefault();
+  const currentForm = event.target;
+  const addFormData = new FormData(currentForm);
+  const id = Date.now();
+  const addingServices = {
+    id,
+    title : addFormData.get('formTitle'),
+    price : addFormData.get('formPrice')
+  }
+
+  services.push(addingServices);
+  selectService.append(new Option(addFormData.get('formTitle'), id ))
+  
+  currentForm.reset();
+})
